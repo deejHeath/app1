@@ -8,18 +8,17 @@
 import UIKit
 import AVFoundation
 
-var soundsOn = true
-
 var imageNumber = -1
 var soundNumber = -1
 var messageNumber = -1
 let numberOfImages = 10
 let NumberOfSounds = 10
-let messageString = ["Hmpf.","Whatever.","Eh?"]
+let messageString = ["Hmpf.","Whatever.","Eh?","Bah."]
 
 class ViewController: UIViewController {
     @IBOutlet weak var msg1Label: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var playSoundSwitch: UISwitch!
     var audioPlayer: AVAudioPlayer!
     
     override func viewDidLoad() {
@@ -57,16 +56,14 @@ class ViewController: UIViewController {
         imageNumber=generateRandom(oldNumber: imageNumber, maxNumber: numberOfImages)
         msg1Label.text=messageString[messageNumber]
         imageView.image=UIImage(named: "image\(imageNumber)")
-        if soundsOn {
+        if playSoundSwitch.isOn {
             soundNumber=generateRandom(oldNumber: soundNumber, maxNumber: NumberOfSounds)
             playSound(soundNumber)
         }
     }
     @IBAction func soundSwitch(_ sender: UISwitch) {
-        if soundsOn {
-            soundsOn = false
-        } else {
-            soundsOn = true
+        if !sender.isOn {
+            audioPlayer.stop()
         }
     }
     
