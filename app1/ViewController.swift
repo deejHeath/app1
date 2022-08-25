@@ -13,7 +13,7 @@ var soundNumber = -1
 var messageNumber = -1
 let numberOfImages = 10
 let NumberOfSounds = 10
-let messageString = ["Hmpf.","Whatever.","Eh?","Bah."]
+let messageString = ["Hmpf.","Whatever.","Eh?","Bah.","Meh."]
 
 class ViewController: UIViewController {
     @IBOutlet weak var msg1Label: UILabel!
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func msgButtonPressed(_ sender: UIButton) {
-        print("🍄 Msg1Button was pressed.")
+        print("🍄 MsgButton was pressed.")
         messageNumber=generateRandom(oldNumber: messageNumber, maxNumber: messageString.count)
         imageNumber=generateRandom(oldNumber: imageNumber, maxNumber: numberOfImages)
         msg1Label.text=messageString[messageNumber]
@@ -62,7 +62,12 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func soundSwitch(_ sender: UISwitch) {
-        if !sender.isOn {
+        if sender.isOn {
+            print("🌔 SoundSwitch turned on.")
+        } else {
+            print("🌒 SoundSwitch turned off.")
+        }
+        if !sender.isOn && audioPlayer != nil {
             audioPlayer.stop()
         }
     }
