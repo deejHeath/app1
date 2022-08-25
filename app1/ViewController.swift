@@ -8,24 +8,26 @@
 import UIKit
 import AVFoundation
 
+var soundsOn = true
+
 var imageNumber = -1
 var soundNumber = -1
 var messageNumber = -1
 let numberOfImages = 10
 let NumberOfSounds = 10
+let messageString = ["Hmpf.","Whatever.","Eh?"]
 
 class ViewController: UIViewController {
     @IBOutlet weak var msg1Label: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     var audioPlayer: AVAudioPlayer!
-    let messageString = ["Hmpf.","Whatever.","Eh?"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("☘️ ViewDidLoad has run.")
     }
     
-    func playSound(soundNumber: Int) {
+    func playSound(_ soundNumber: Int) {
         let soundName="sound\(soundNumber)"
         if let sound = NSDataAsset(name: soundName){
             do {
@@ -51,9 +53,21 @@ class ViewController: UIViewController {
     
     @IBAction func msgButtonPressed(_ sender: UIButton) {
         print("🍄 Msg1Button was pressed.")
-        msg1Label.text=messageString[generateRandom(oldNumber: messageNumber, maxNumber: messageString.count)]
-        imageView.image=UIImage(named: "image\(generateRandom(oldNumber: imageNumber, maxNumber: numberOfImages))")
-        playSound(soundNumber: generateRandom(oldNumber: soundNumber, maxNumber: NumberOfSounds))
+        messageNumber=generateRandom(oldNumber: messageNumber, maxNumber: messageString.count)
+        imageNumber=generateRandom(oldNumber: imageNumber, maxNumber: numberOfImages)
+        msg1Label.text=messageString[messageNumber]
+        imageView.image=UIImage(named: "image\(imageNumber)")
+        if soundsOn {
+            soundNumber=generateRandom(oldNumber: soundNumber, maxNumber: NumberOfSounds)
+            playSound(soundNumber)
+        }
+    }
+    @IBAction func soundSwitch(_ sender: UISwitch) {
+        if soundsOn {
+            soundsOn = false
+        } else {
+            soundsOn = true
+        }
     }
     
 }
